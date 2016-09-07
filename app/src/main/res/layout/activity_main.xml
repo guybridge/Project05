@@ -62,23 +62,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <EditText
-                android:textAlignment="center"
+            <TextView
                 android:layout_gravity="center_horizontal"
+                android:textSize="48sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:textSize="48sp"
-                android:ems="4"
-                android:id="@+id/minVoteCountEditText"/>
+                android:text="100"
+                android:id="@+id/minVoteCountTextView"/>
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/minVoteCountSeekBar"/>
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Minumum vote count"
-                android:id="@+id/textView"
+                android:id="@+id/voteCountTextView"
                 android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>

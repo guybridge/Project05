@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.nio.channels.SelectionKey;
 import java.util.Date;
 
 import au.com.wsit.project05.utils.MovieNightConstants;
@@ -21,11 +22,14 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = MainActivity.class.getSimpleName();
     private TextView mRatingTextView;
     private SeekBar mRatingSeekBar;
-    private EditText mVoteCountEditText;
-    private Button mSearchButton;
+
+    private TextView mVoteCountTextView;
+    private SeekBar mVoteCountSeekBar;
 
     private DatePicker mMinDatePicker;
     private DatePicker mMaxDatePicker;
+
+    private Button mSearchButton;
 
     private String mRating;
     private String mVoteCount;
@@ -40,7 +44,9 @@ public class MainActivity extends AppCompatActivity
 
         mRatingTextView = (TextView) findViewById(R.id.minRatingCountTextView);
         mRatingSeekBar = (SeekBar) findViewById(R.id.ratingSeekBar);
-        mVoteCountEditText = (EditText) findViewById(R.id.minVoteCountEditText);
+
+        mVoteCountTextView = (TextView) findViewById(R.id.minVoteCountTextView);
+        mVoteCountSeekBar = (SeekBar) findViewById(R.id.minVoteCountSeekBar);
         mSearchButton = (Button) findViewById(R.id.searchButton);
 
         mMinDatePicker = (DatePicker) findViewById(R.id.minDate);
@@ -49,6 +55,9 @@ public class MainActivity extends AppCompatActivity
         // Seek bar setup
         mRatingSeekBar.setMax(10);
         mRatingSeekBar.setProgress(5);
+
+        mVoteCountSeekBar.setMax(1000);
+        mVoteCountSeekBar.setProgress(100);
 
         mRatingSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
@@ -59,6 +68,29 @@ public class MainActivity extends AppCompatActivity
 
                 // Store the progress
                 mRating = String.valueOf(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+        });
+
+        mVoteCountSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b)
+            {
+                mVoteCountTextView.setText(String.valueOf(i));
+                mVoteCount = String.valueOf(i);
+
             }
 
             @Override
@@ -85,11 +117,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                // Get the data from the edit Text
-                mVoteCount = mVoteCountEditText.getText().toString();
 
                 // Get the dates
-
                 createURL(mRating, mVoteCount, minDate, maxDate);
             }
         });

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Project05.iml" filepath="$PROJECT_DIR$/Project05.iml" />
       <module fileurl="file://$USER_HOME$/SSD2/git/TreeHouse/Project05/Project05.iml" filepath="$USER_HOME$/SSD2/git/TreeHouse/Project05/Project05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$USER_HOME$/SSD2/git/TreeHouse/Project05/app/app.iml" filepath="$USER_HOME$/SSD2/git/TreeHouse/Project05/app/app.iml" />
     </modules>
   </component>
