@@ -3,6 +3,14 @@ package au.com.wsit.project05;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import java.util.Date;
 
 import au.com.wsit.project05.utils.MovieNightConstants;
 import au.com.wsit.project05.utils.UrlBuilder;
@@ -11,6 +19,18 @@ public class MainActivity extends AppCompatActivity
 {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private TextView mRatingTextView;
+    private SeekBar mRatingSeekBar;
+    private EditText mVoteCountEditText;
+    private Button mSearchButton;
+
+    private DatePicker mMinDatePicker;
+    private DatePicker mMaxDatePicker;
+
+    private String mRating;
+    private String mVoteCount;
+    private String minDate;
+    private String maxDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -18,49 +38,83 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mRatingTextView = (TextView) findViewById(R.id.minRatingCountTextView);
+        mRatingSeekBar = (SeekBar) findViewById(R.id.ratingSeekBar);
+        mVoteCountEditText = (EditText) findViewById(R.id.minVoteCountEditText);
+        mSearchButton = (Button) findViewById(R.id.searchButton);
+
+        mMinDatePicker = (DatePicker) findViewById(R.id.minDate);
+        mMaxDatePicker = (DatePicker) findViewById(R.id.maxDate);
+
+        // Seek bar setup
+        mRatingSeekBar.setMax(10);
+        mRatingSeekBar.setProgress(5);
+
+        mRatingSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+                mRatingTextView.setText(String.valueOf(progress));
+
+                // Store the progress
+                mRating = String.valueOf(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar)
+            {
+
+            }
+        });
+
+        // Setup the date picker
+        
+
+
+
+        // Setup the button click listener
+        mSearchButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                // Get the data from the edit Text
+                mVoteCount = mVoteCountEditText.getText().toString();
+
+                // Get the dates
+
+                createURL(mRating, mVoteCount, minDate, maxDate);
+            }
+        });
+
+
+
+
+    }
+
+    private String createURL(String minRating, String minVoteCount, String minDate, String maxDate)
+    {
         // Create a new URL builder with the discover API endpoint as the base URL
         UrlBuilder builtURL = new UrlBuilder(MovieNightConstants.DISCOVER_BASE_URL);
 
         // Set the minimum vote average
-        builtURL.setVoteAverageGTE(5);
+        builtURL.setVoteAverageGTE(minRating);
 
         // Set the vote count
-        builtURL.setVoteCountGTE(5);
+        builtURL.setVoteCountGTE(minVoteCount);
 
         // Set the release date ranges
-        builtURL.setReleaseDateRange(2014, 2015);
+        builtURL.setReleaseDateRange(minDate, maxDate);
 
         Log.i(TAG, "The Build URL is: " + builtURL.getmBuiltURL());
 
-
-        // Allow users to choose: rating threshold
-
-        // vote_average.gte=
-
-        // Allow users to choose: minimum # of ratings
-
-        // vote_count.gte=100
-
-        // Allow users to choose: release date range
-
-        // release_date.gte=
-        // release_date.lte=
-
-        // https://api.themoviedb.org/3/discover/movie?sort_by=vote_count.gte=10&api_key=4a0ef3c693045b63c407d7f5b520f647
-
-        // EXAMPLE
-        // https://api.themoviedb.org/3/discover/movie? // BASE URL
-        // &api_key=4a0ef3c693045b63c407d7f5b520f647    // API_KEY
-        // &sort_by=
-        // vote_average.desc&vote_average.gte=10
-        // &vote_count.gte=100
-        // &release_date.gte=2010
-        // &release_date.lte=2012
-
-        // EXAMPLE
-        // https://api.themoviedb.org/3/discover/movie?&api_key=4a0ef3c693045b63c407d7f5b520f647&sort_by=vote_average.desc&vote_average.gte=5&vote_count.gte=100&release_date.gte=2010&release_date.lte=2012
-
-
-
+        return builtURL.getmBuiltURL();
     }
 }
