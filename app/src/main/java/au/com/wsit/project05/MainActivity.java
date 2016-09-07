@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.LineNumberReader;
 import java.nio.channels.SelectionKey;
 import java.util.Date;
 
@@ -26,13 +28,13 @@ public class MainActivity extends AppCompatActivity
     private TextView mVoteCountTextView;
     private SeekBar mVoteCountSeekBar;
 
-    private DatePicker mMinDatePicker;
-    private DatePicker mMaxDatePicker;
+    private NumberPicker mMinDatePicker;
+    private NumberPicker mMaxDatePicker;
 
     private Button mSearchButton;
 
-    private String mRating;
-    private String mVoteCount;
+    private String mRating = String.valueOf(5);
+    private String mVoteCount = String.valueOf(100);
     private String minDate;
     private String maxDate;
 
@@ -49,8 +51,8 @@ public class MainActivity extends AppCompatActivity
         mVoteCountSeekBar = (SeekBar) findViewById(R.id.minVoteCountSeekBar);
         mSearchButton = (Button) findViewById(R.id.searchButton);
 
-        mMinDatePicker = (DatePicker) findViewById(R.id.minDate);
-        mMaxDatePicker = (DatePicker) findViewById(R.id.maxDate);
+        mMinDatePicker = (NumberPicker) findViewById(R.id.minDate);
+        mMaxDatePicker = (NumberPicker) findViewById(R.id.maxDate);
 
         // Seek bar setup
         mRatingSeekBar.setMax(10);
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity
 
         mVoteCountSeekBar.setMax(1000);
         mVoteCountSeekBar.setProgress(100);
+
+
 
         mRatingSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
         {
@@ -106,8 +110,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // Setup the date picker
-        
+        // Setup the number pickers
+        mMinDatePicker.setMinValue(1500);
+        mMinDatePicker.setMaxValue(2050);
+        mMinDatePicker.setValue(2000);
+        mMinDatePicker.setWrapSelectorWheel(true);
+
+        mMaxDatePicker.setMinValue(1500);
+        mMaxDatePicker.setMaxValue(2050);
+        mMaxDatePicker.setValue(2015);
+        mMaxDatePicker.setWrapSelectorWheel(true);
+
+
 
 
 
@@ -119,6 +133,9 @@ public class MainActivity extends AppCompatActivity
             {
 
                 // Get the dates
+                minDate = String.valueOf(mMinDatePicker.getValue());
+                maxDate = String.valueOf(mMaxDatePicker.getValue());
+
                 createURL(mRating, mVoteCount, minDate, maxDate);
             }
         });
