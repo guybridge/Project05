@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity
 
                 // Start the results intent
                 Intent intent = new Intent(MainActivity.this, Results.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra(MovieNightConstants.KEY_RESULTS_URL, URL);
                 startActivity(intent);
 
