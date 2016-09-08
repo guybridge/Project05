@@ -1,20 +1,16 @@
-package au.com.wsit.project05;
+package au.com.wsit.project05.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.io.LineNumberReader;
-import java.nio.channels.SelectionKey;
-import java.util.Date;
-
+import au.com.wsit.project05.R;
 import au.com.wsit.project05.utils.MovieNightConstants;
 import au.com.wsit.project05.utils.UrlBuilder;
 
@@ -136,7 +132,13 @@ public class MainActivity extends AppCompatActivity
                 minDate = String.valueOf(mMinDatePicker.getValue());
                 maxDate = String.valueOf(mMaxDatePicker.getValue());
 
-                createURL(mRating, mVoteCount, minDate, maxDate);
+                String URL = createURL(mRating, mVoteCount, minDate, maxDate);
+
+                // Start the results intent
+                Intent intent = new Intent(MainActivity.this, Results.class);
+                intent.putExtra(MovieNightConstants.KEY_RESULTS_URL, URL);
+                startActivity(intent);
+
             }
         });
 
