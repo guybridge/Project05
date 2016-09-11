@@ -19,4 +19,8 @@ public class MovieNightConstants
     // IMAGE endpoint EG https://image.tmdb.org/t/p/w500/coss7RgL0NH6g4fC2s5atvf3dFO.jpg&api_key=4a0ef3c693045b63c407d7f5b520f647
     public static final String IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/w300";
     public static final String KEY_RESULTS_URL = "RESULTS_URL";
+
+    // JSON Keys
+    public static final String RESULTS = "results";
+    public static final String POSTER_PATH = "poster_path";
 }

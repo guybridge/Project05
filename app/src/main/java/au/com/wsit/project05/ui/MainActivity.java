@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
 
-                // Get the dates
+                // HttpUtils the dates
                 minDate = String.valueOf(mMinDatePicker.getValue());
                 maxDate = String.valueOf(mMaxDatePicker.getValue());
 
