@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="36sp"
+                android:textSize="12sp"
                 android:text="5"
                 android:textColor="@color/textColour"
                 android:id="@+id/minRatingCountTextView"
@@ -44,7 +44,8 @@
                 android:text="Minimum rating"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/minRatingTextView"
-                android:textColor="@color/textColour"/>
+                android:textColor="@color/textColour"
+                android:textSize="8sp"/>
 
         </LinearLayout>
 
@@ -68,7 +69,7 @@
 
             <TextView
                 android:layout_gravity="center_horizontal"
-                android:textSize="36sp"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColour"
@@ -81,6 +82,7 @@
                 android:id="@+id/minVoteCountSeekBar"/>
 
             <TextView
+                android:textSize="8sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Minumum vote count"
@@ -110,6 +112,8 @@
                 android:id="@+id/minDate"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:scaleX="0.1"
+                android:scaleY="0.1"
 >
             </NumberPicker>
 
@@ -119,6 +123,8 @@
                 android:background="@color/colorPrimary"
                 android:layout_weight="1"
                 android:id="@+id/maxDate"
+                android:scaleX="0.1"
+                android:scaleY="0.1"
 >
 
             </NumberPicker>
