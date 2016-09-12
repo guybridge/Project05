@@ -30,11 +30,18 @@ public class UrlBuilder
             mBuiltURL = mBuiltURL + "&release_date.gte=" + minDate + "&release_date.lte=" + maxDate;
         }
 
+        public void setGenres(String genre)
+        {
+                    mBuiltURL = mBuiltURL + "&with_genres=" + genre;
+        }
+
 
         public String getmBuiltURL()
         {
             return mBuiltURL;
         }
+
+
 
 
 

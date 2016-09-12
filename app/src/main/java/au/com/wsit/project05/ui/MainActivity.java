@@ -1,5 +1,6 @@
 package au.com.wsit.project05.ui;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private NumberPicker mMaxDatePicker;
 
     private Button mSearchButton;
+    private Button mGenreButton;
 
     private String mRating = String.valueOf(5);
     private String mVoteCount = String.valueOf(100);
@@ -46,9 +48,11 @@ public class MainActivity extends AppCompatActivity
         mVoteCountTextView = (TextView) findViewById(R.id.minVoteCountTextView);
         mVoteCountSeekBar = (SeekBar) findViewById(R.id.minVoteCountSeekBar);
         mSearchButton = (Button) findViewById(R.id.searchButton);
+        mGenreButton = (Button) findViewById(R.id.genreButton);
 
         mMinDatePicker = (NumberPicker) findViewById(R.id.minDate);
         mMaxDatePicker = (NumberPicker) findViewById(R.id.maxDate);
+
 
         // Seek bar setup
         mRatingSeekBar.setMax(10);
@@ -118,10 +122,20 @@ public class MainActivity extends AppCompatActivity
         mMaxDatePicker.setWrapSelectorWheel(true);
 
 
+        mGenreButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                // Open genre selection dialog
+                FragmentManager fm = getFragmentManager();
+                GenreSelectionFragment genreSelection = new GenreSelectionFragment();
+                genreSelection.show(fm, "Genre Selection");
+            }
+        });
 
 
-
-        // Setup the button click listener
+        // Setup the button click listener for searching
         mSearchButton.setOnClickListener(new View.OnClickListener()
         {
             @Override

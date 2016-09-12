@@ -20,6 +20,8 @@ public class MovieNightConstants
     public static final String IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/w500";
     public static final String KEY_RESULTS_URL = "RESULTS_URL";
 
+    public static final String GENRE_LIST =  "https://api.themoviedb.org/3/genre/movie/list?api_key=4a0ef3c693045b63c407d7f5b520f647";
+
     // JSON Keys
     public static final String RESULTS = "results";
     public static final String TITLE = "title";
@@ -30,4 +32,5 @@ public class MovieNightConstants
     public static final String MOVIE_ID = "id";
 
     public static final String POSTER_URL = "POSTER_URL";
+    public static final String GENRES = "genres";
 }
