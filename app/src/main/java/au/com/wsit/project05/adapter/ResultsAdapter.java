@@ -1,8 +1,12 @@
 package au.com.wsit.project05.adapter;
 
-import android.app.VoiceInteractor;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Movie;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.MovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,8 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import au.com.wsit.project05.R;
+import au.com.wsit.project05.ui.MovieDetailsFragment;
+import au.com.wsit.project05.utils.MovieNightConstants;
 import au.com.wsit.project05.utils.ResultsItems;
 
 /**
@@ -22,7 +28,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     private ResultsItems[] mResults;
 
 
-    public ResultsAdapter(Context context, ResultsItems[] results)
+    public ResultsAdapter(Context context, ResultsItems[]results)
     {
         mContext = context;
         mResults = results;
@@ -33,11 +39,13 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.results_item_view, parent, false);
 
+
+
         return new ResultsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ResultsViewHolder holder, int position)
+    public void onBindViewHolder(final ResultsViewHolder holder, final int position)
     {
         holder.bindResults(mResults[position]);
 
@@ -47,6 +55,19 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
             public void onClick(View view)
             {
                 // Start Movie details Intent
+                FragmentManager fm = ((Activity)mContext).getFragmentManager();
+                MovieDetailsFragment movieDetails = new MovieDetailsFragment();
+
+                // Create a bundle to store data
+                Bundle bundle = new Bundle();
+                bundle.putString(MovieNightConstants.POSTER_URL, mResults[position].getmPosterURL());
+                bundle.putString(MovieNightConstants.TITLE, mResults[position].getmMovieTitle());
+                bundle.putString(MovieNightConstants.OVERVIEW, mResults[position].getmOverview());
+
+                movieDetails.setArguments(bundle);
+
+                movieDetails.show(fm, "Movie Details");
+
             }
         });
     }

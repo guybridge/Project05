@@ -1,5 +1,6 @@
 package au.com.wsit.project05.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Movie;
 import android.support.annotation.NonNull;
@@ -83,8 +84,9 @@ public class Results extends AppCompatActivity
                             @Override
                             public void run()
                             {
+
                                 mResultsLoadingProgress.setVisibility(View.INVISIBLE);
-                                mResultsAdapter = new ResultsAdapter(Results.this, resultsItems);
+                                mResultsAdapter = new ResultsAdapter(Results.this ,resultsItems);
                                 mResultsRecyclerView.setAdapter(mResultsAdapter);
                             }
                         });
@@ -122,8 +124,14 @@ public class Results extends AppCompatActivity
                 ResultsItems items = new ResultsItems();
                 // Get the poster path
                 String posterPath = resultsArray.getJSONObject(i).get(MovieNightConstants.POSTER_PATH).toString();
+                String title = resultsArray.getJSONObject(i).get(MovieNightConstants.TITLE).toString();
+                String overview = resultsArray.getJSONObject(i).get(MovieNightConstants.OVERVIEW).toString();
+                String movieID = resultsArray.getJSONObject(i).get(MovieNightConstants.MOVIE_ID).toString();
 
                 items.setmPosterURL(MovieNightConstants.IMAGE_ENDPOINT + posterPath + "&api_key=" + MovieNightConstants.API_KEY);
+                items.setmMovieTitle(title);
+                items.setmOverview(overview);
+                items.setmMovieID(movieID);
 
                 Log.i(TAG, MovieNightConstants.IMAGE_ENDPOINT + posterPath);
 
