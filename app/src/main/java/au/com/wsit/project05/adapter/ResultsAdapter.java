@@ -39,8 +39,6 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.results_item_view, parent, false);
 
-
-
         return new ResultsViewHolder(view);
     }
 

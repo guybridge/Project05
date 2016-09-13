@@ -4,11 +4,13 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/genreRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Drama"
+        android:id="@+id/genreCheckBox"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
