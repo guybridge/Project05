@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import au.com.wsit.project05.R;
 import au.com.wsit.project05.utils.GenreItems;
@@ -30,7 +31,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     @Override
     public GenreViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_selection_fragment, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_item_view, parent, false);
         return new GenreViewHolder(view);
     }
 
@@ -60,6 +61,8 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         {
             Log.i(TAG, "Genre is: " + item.getGenreName());
             mCheckbox.setText(item.getGenreName());
+
+
         }
     }
 
