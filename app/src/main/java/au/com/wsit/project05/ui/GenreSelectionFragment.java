@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.TreeMap;
+
 import au.com.wsit.project05.R;
 import au.com.wsit.project05.adapter.GenreAdapter;
 import au.com.wsit.project05.utils.GenreItems;
@@ -86,5 +88,10 @@ public class GenreSelectionFragment extends DialogFragment
         });
 
         return rootView;
+    }
+
+    public TreeMap<String, String> getSelected()
+    {
+        return mGenreAdapter.getSelectedGenres();
     }
 }

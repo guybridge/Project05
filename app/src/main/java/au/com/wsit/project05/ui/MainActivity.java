@@ -4,12 +4,15 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import java.util.Map;
 
 import au.com.wsit.project05.R;
 import au.com.wsit.project05.utils.MovieNightConstants;
@@ -36,6 +39,10 @@ public class MainActivity extends AppCompatActivity
     private String minDate;
     private String maxDate;
 
+    GenreSelectionFragment genreSelection = new GenreSelectionFragment();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -60,6 +67,8 @@ public class MainActivity extends AppCompatActivity
 
         mVoteCountSeekBar.setMax(1000);
         mVoteCountSeekBar.setProgress(100);
+
+
 
 
 
@@ -129,10 +138,14 @@ public class MainActivity extends AppCompatActivity
             {
                 // Open genre selection dialog
                 FragmentManager fm = getFragmentManager();
-                GenreSelectionFragment genreSelection = new GenreSelectionFragment();
                 genreSelection.show(fm, "Genre Selection");
+
+
             }
         });
+
+
+
 
 
         // Setup the button click listener for searching
@@ -164,8 +177,29 @@ public class MainActivity extends AppCompatActivity
 
     private String createURL(String minRating, String minVoteCount, String minDate, String maxDate)
     {
+
+        String genresString = "";
+
+
+            Log.i(TAG, "More than two genres selected");
+            // Get the genre data
+            for(Map.Entry<String, String> entry : genreSelection.getSelected().entrySet())
+            {
+                String genreID = entry.getKey();
+                String genreName = entry.getValue();
+
+                Log.i(TAG, "Selected genre: " + genreName + " id: " + genreID);
+
+                genresString = genresString + entry.getKey() + "|";
+
+            }
+
+
         // Create a new URL builder with the discover API endpoint as the base URL
         UrlBuilder builtURL = new UrlBuilder(MovieNightConstants.DISCOVER_BASE_URL);
+
+        // Set the genres selections
+        builtURL.setGenres(genresString.substring(1));
 
         // Set the minimum vote average
         builtURL.setVoteAverageGTE(minRating);

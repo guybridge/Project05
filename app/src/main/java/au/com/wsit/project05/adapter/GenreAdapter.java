@@ -7,7 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.TreeMap;
 
 import au.com.wsit.project05.R;
 import au.com.wsit.project05.utils.GenreItems;
@@ -19,6 +23,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
 {
     private Context mContext;
     private GenreItems[] mGenreItems;
+    private TreeMap<String, String> genresMap = new TreeMap<>();
     public static final String TAG = GenreAdapter.class.getSimpleName();
 
 
@@ -26,6 +31,12 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     {
         mContext = context;
         mGenreItems = genreItems;
+
+    }
+
+    public TreeMap<String, String> getSelectedGenres()
+    {
+        return genresMap;
     }
 
     @Override
@@ -55,12 +66,34 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         {
             super(itemView);
             mCheckbox = (CheckBox) itemView.findViewById(R.id.genreCheckBox);
+
+
         }
 
-        public void bindGenres(GenreItems item)
+        public void bindGenres(final GenreItems item)
         {
             Log.i(TAG, "Genre is: " + item.getGenreName());
             mCheckbox.setText(item.getGenreName());
+
+            // Setup the button click listener
+            mCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    if(isChecked)
+                    {
+                        Toast.makeText(mContext, "Checked: Genre is: " + item.getGenreName() + "ID: " + item.getGenreID(), Toast.LENGTH_SHORT).show();
+                        genresMap.put(item.getGenreID(), item.getGenreName());
+                    }
+                    else
+                    {
+                        Toast.makeText(mContext, "Unchecked: Genre is: " + item.getGenreName() + "ID: " + item.getGenreID(), Toast.LENGTH_SHORT).show();
+                        genresMap.remove(item.getGenreID());
+                    }
+
+                }
+            });
 
 
         }
