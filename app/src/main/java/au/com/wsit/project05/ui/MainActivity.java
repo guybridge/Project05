@@ -180,26 +180,37 @@ public class MainActivity extends AppCompatActivity
 
         String genresString = "";
 
-
-            Log.i(TAG, "More than two genres selected");
-            // Get the genre data
-            for(Map.Entry<String, String> entry : genreSelection.getSelected().entrySet())
-            {
-                String genreID = entry.getKey();
-                String genreName = entry.getValue();
-
-                Log.i(TAG, "Selected genre: " + genreName + " id: " + genreID);
-
-                genresString = genresString + entry.getKey() + "|";
-
-            }
-
-
         // Create a new URL builder with the discover API endpoint as the base URL
         UrlBuilder builtURL = new UrlBuilder(MovieNightConstants.DISCOVER_BASE_URL);
 
-        // Set the genres selections
-        builtURL.setGenres(genresString.substring(1));
+
+
+        try
+           {
+               // Get the genre data
+               for(Map.Entry<String, String> entry : genreSelection.getSelected().entrySet())
+               {
+                   String genreID = entry.getKey();
+                   String genreName = entry.getValue();
+
+                   Log.i(TAG, "Selected genre: " + genreName + " id: " + genreID);
+
+                   genresString = genresString + entry.getKey() + "|";
+
+               }
+
+               // Set the genres selections
+               builtURL.setGenres(genresString.substring(1));
+           }
+           catch(NullPointerException e)
+           {
+               Log.i(TAG, "No genres selected");
+           }
+
+
+
+
+
 
         // Set the minimum vote average
         builtURL.setVoteAverageGTE(minRating);

@@ -83,12 +83,12 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
                 {
                     if(isChecked)
                     {
-                        Toast.makeText(mContext, "Checked: Genre is: " + item.getGenreName() + "ID: " + item.getGenreID(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "Checked: Genre is: " + item.getGenreName() + "ID: " + item.getGenreID(), Toast.LENGTH_SHORT).show();
                         genresMap.put(item.getGenreID(), item.getGenreName());
                     }
                     else
                     {
-                        Toast.makeText(mContext, "Unchecked: Genre is: " + item.getGenreName() + "ID: " + item.getGenreID(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "Unchecked: Genre is: " + item.getGenreName() + "ID: " + item.getGenreID(), Toast.LENGTH_SHORT).show();
                         genresMap.remove(item.getGenreID());
                     }
 

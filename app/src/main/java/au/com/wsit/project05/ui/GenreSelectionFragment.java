@@ -92,6 +92,13 @@ public class GenreSelectionFragment extends DialogFragment
 
     public TreeMap<String, String> getSelected()
     {
-        return mGenreAdapter.getSelectedGenres();
+        try
+        {
+            return mGenreAdapter.getSelectedGenres();
+        }
+        catch(NullPointerException e)
+        {
+            return null;
+        }
     }
 }
