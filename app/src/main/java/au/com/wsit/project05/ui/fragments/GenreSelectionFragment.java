@@ -1,4 +1,4 @@
-package au.com.wsit.project05.ui;
+package au.com.wsit.project05.ui.fragments;
 
 import android.app.DialogFragment;
 import android.os.Bundle;

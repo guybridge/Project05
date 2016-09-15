@@ -34,10 +34,11 @@
     <TextView
         android:textAlignment="center"
         android:padding="4dp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/textColour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity."
         android:id="@+id/movieOverviewTextView"
             android:layout_below="@+id/movieTitleTextView"/>

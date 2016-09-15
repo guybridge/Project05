@@ -1,6 +1,7 @@
 package au.com.wsit.project05.ui;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Movie;
 import android.support.annotation.NonNull;
@@ -9,10 +10,13 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +24,7 @@ import org.json.JSONObject;
 
 import au.com.wsit.project05.R;
 import au.com.wsit.project05.adapter.ResultsAdapter;
+import au.com.wsit.project05.ui.fragments.SortFragment;
 import au.com.wsit.project05.utils.HttpUtils;
 import au.com.wsit.project05.utils.MovieNightConstants;
 import au.com.wsit.project05.utils.ResultsItems;
@@ -140,6 +145,29 @@ public class Results extends AppCompatActivity
             return resultsItems;
         }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
 
+        switch (id)
+        {
+            case R.id.action_sort:
+                FragmentManager fm = getFragmentManager();
+                SortFragment sortFragment = new SortFragment();
+                sortFragment.show(fm, "Sort Fragment");
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_results, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+}
 

@@ -3,10 +3,8 @@ package au.com.wsit.project05.adapter;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.MovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import au.com.wsit.project05.R;
-import au.com.wsit.project05.ui.MovieDetailsFragment;
+import au.com.wsit.project05.ui.fragments.MovieDetailsFragment;
 import au.com.wsit.project05.utils.MovieNightConstants;
 import au.com.wsit.project05.utils.ResultsItems;
 
