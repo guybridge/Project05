@@ -1,13 +1,16 @@
 package au.com.wsit.project05.ui;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Movie;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -38,6 +41,7 @@ public class Results extends AppCompatActivity
     private GridLayoutManager mGridLayout;
     private ProgressBar mResultsLoadingProgress;
     private TextView mErrorTextView;
+    private String jsonURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,9 +58,10 @@ public class Results extends AppCompatActivity
         mGridLayout = new GridLayoutManager(this, 2);
         mResultsRecyclerView.setLayoutManager(mGridLayout);
 
+
         // HttpUtils URL
         Intent intent = getIntent();
-        String jsonURL = intent.getStringExtra(MovieNightConstants.KEY_RESULTS_URL);
+        jsonURL = intent.getStringExtra(MovieNightConstants.KEY_RESULTS_URL);
 
 
         HttpUtils http = new HttpUtils(jsonURL);
@@ -111,7 +116,6 @@ public class Results extends AppCompatActivity
         });
 
 
-
     }
 
     @NonNull
@@ -153,13 +157,64 @@ public class Results extends AppCompatActivity
         switch (id)
         {
             case R.id.action_sort:
-                FragmentManager fm = getFragmentManager();
-                SortFragment sortFragment = new SortFragment();
-                sortFragment.show(fm, "Sort Fragment");
+                sortResults();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Sort the results
+    private void sortResults()
+    {
+        // Get access to the fragment manager
+        FragmentManager fm = getFragmentManager();
+        SortFragment sortFragment = new SortFragment(new SortFragment.DismissListener()
+        {
+            @Override
+            public void getSelection(String selection)
+            {
+                // Get the selection and sort
+                switch (selection)
+                {
+                    case MovieNightConstants.KEY_SORT_POPULARITY:
+                        Toast.makeText(Results.this, "Sorting by popularity", Toast.LENGTH_SHORT).show();
+
+                            HttpUtils httpUtils = new HttpUtils(jsonURL + "&popularity.asc");
+                        Log.i(TAG, "New URL is: " + jsonURL + "&popularity.asc");
+                            httpUtils.getURL(new HttpUtils.Callback()
+                            {
+                                @Override
+                                public void onResponse(String data)
+                                {
+                                    try
+                                    {
+                                       final ResultsItems[] items = getJSON(data);
+                                        runOnUiThread(new Runnable()
+                                        {
+                                            @Override
+                                            public void run()
+                                            {
+                                                mResultsAdapter = new ResultsAdapter(Results.this , items);
+                                                mResultsRecyclerView.setAdapter(mResultsAdapter);
+                                            }
+                                        });
+
+                                    } catch (JSONException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
+
+                        break;
+                }
+
+
+            }
+        });
+        sortFragment.show(fm, "Sort Fragment");
     }
 
     @Override
@@ -169,5 +224,6 @@ public class Results extends AppCompatActivity
 
         return super.onCreateOptionsMenu(menu);
     }
+
 }
 

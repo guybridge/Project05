@@ -33,4 +33,10 @@ public class MovieNightConstants
 
     public static final String POSTER_URL = "POSTER_URL";
     public static final String GENRES = "genres";
+
+    public static final String KEY_SORT_POPULARITY = "popularity";
+    public static final String KEY_SORT_RELEASE_DATE = "release_date";
+    public static final String KEY_SORT_REVENUE = "revenue";
+    public static final String KEY_SORT_AVERAGE_VOTE = "average_vote";
+    public static final String KEY_SORT_NUM_VOTES = "number_of_votes";
 }

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/sort_fragment"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="wrap_content"
@@ -16,30 +23,39 @@
 
 
     <RadioGroup
+        android:padding="10dp"
+        android:id="@+id/sortRadioGroup"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <RadioButton
+            android:id="@+id/radioPopularity"
             android:text="Popularity"
             style="@style/radioButtonStyle"/>
 
         <RadioButton
+            android:id="@+id/radioReleaseDate"
             android:text="Release Date"
             style="@style/radioButtonStyle"/>
 
         <RadioButton
+            android:id="@+id/radioRevenue"
             android:text="Revenue"
             style="@style/radioButtonStyle"/>
 
         <RadioButton
+            android:id="@+id/radioAverageVote"
             android:text="Average Vote"
             style="@style/radioButtonStyle"/>
 
         <RadioButton
+            android:id="@+id/radioNumVotes"
             android:text="Number of Votes"
             style="@style/radioButtonStyle"/>
 
     </RadioGroup>
 
 </LinearLayout>
+
+</FrameLayout>

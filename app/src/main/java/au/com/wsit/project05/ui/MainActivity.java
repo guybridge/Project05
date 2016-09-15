@@ -183,8 +183,6 @@ public class MainActivity extends AppCompatActivity
         // Create a new URL builder with the discover API endpoint as the base URL
         UrlBuilder builtURL = new UrlBuilder(MovieNightConstants.DISCOVER_BASE_URL);
 
-
-
         try
            {
                // Get the genre data
@@ -206,11 +204,6 @@ public class MainActivity extends AppCompatActivity
            {
                Log.i(TAG, "No genres selected");
            }
-
-
-
-
-
 
         // Set the minimum vote average
         builtURL.setVoteAverageGTE(minRating);
