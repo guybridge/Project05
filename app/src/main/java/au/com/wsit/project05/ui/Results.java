@@ -31,6 +31,7 @@ import au.com.wsit.project05.ui.fragments.SortFragment;
 import au.com.wsit.project05.utils.HttpUtils;
 import au.com.wsit.project05.utils.MovieNightConstants;
 import au.com.wsit.project05.utils.ResultsItems;
+import au.com.wsit.project05.utils.UrlBuilder;
 
 public class Results extends AppCompatActivity
 {
@@ -63,7 +64,14 @@ public class Results extends AppCompatActivity
         Intent intent = getIntent();
         jsonURL = intent.getStringExtra(MovieNightConstants.KEY_RESULTS_URL);
 
+        getResults(jsonURL);
 
+
+    }
+
+    // Gets the JSON Data from the URL passed into it then loads it into the adapter
+    private void getResults(String jsonURL)
+    {
         HttpUtils http = new HttpUtils(jsonURL);
         http.getURL(new HttpUtils.Callback()
         {
@@ -102,10 +110,6 @@ public class Results extends AppCompatActivity
                         });
                     }
 
-
-
-
-
                 }
                 catch (JSONException e)
                 {
@@ -114,10 +118,10 @@ public class Results extends AppCompatActivity
                 }
             }
         });
-
-
     }
 
+
+    // Takes the JSON results and returns a loaded getterSetter object of the results ready for loading into the adapter
     @NonNull
     private ResultsItems[] getJSON(String data) throws JSONException
     {
@@ -142,7 +146,7 @@ public class Results extends AppCompatActivity
                 items.setmOverview(overview);
                 items.setmMovieID(movieID);
 
-                Log.i(TAG, MovieNightConstants.IMAGE_ENDPOINT + posterPath);
+                //Log.i(TAG, MovieNightConstants.IMAGE_ENDPOINT + posterPath);
 
                 resultsItems[i] = items;
             }
@@ -171,43 +175,34 @@ public class Results extends AppCompatActivity
         FragmentManager fm = getFragmentManager();
         SortFragment sortFragment = new SortFragment(new SortFragment.DismissListener()
         {
+            // Callback from the DialogFragment
             @Override
             public void getSelection(String selection)
             {
+                Log.i(TAG, "Got a callback: " + selection);
                 // Get the selection and sort
                 switch (selection)
                 {
+
                     case MovieNightConstants.KEY_SORT_POPULARITY:
                         Toast.makeText(Results.this, "Sorting by popularity", Toast.LENGTH_SHORT).show();
-
-                            HttpUtils httpUtils = new HttpUtils(jsonURL + "&popularity.asc");
-                        Log.i(TAG, "New URL is: " + jsonURL + "&popularity.asc");
-                            httpUtils.getURL(new HttpUtils.Callback()
-                            {
-                                @Override
-                                public void onResponse(String data)
-                                {
-                                    try
-                                    {
-                                       final ResultsItems[] items = getJSON(data);
-                                        runOnUiThread(new Runnable()
-                                        {
-                                            @Override
-                                            public void run()
-                                            {
-                                                mResultsAdapter = new ResultsAdapter(Results.this , items);
-                                                mResultsRecyclerView.setAdapter(mResultsAdapter);
-                                            }
-                                        });
-
-                                    } catch (JSONException e)
-                                    {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-
-
+                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_POPULARITY));
+                        break;
+                    case MovieNightConstants.KEY_SORT_RELEASE_DATE:
+                        Toast.makeText(Results.this, "Sorting by release date", Toast.LENGTH_SHORT).show();
+                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_RELEASE_DATE));
+                        break;
+                    case MovieNightConstants.KEY_SORT_REVENUE:
+                        Toast.makeText(Results.this, "Sorting by revenue", Toast.LENGTH_SHORT).show();
+                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_REVENUE));
+                        break;
+                    case MovieNightConstants.KEY_SORT_AVERAGE_VOTE:
+                        Toast.makeText(Results.this, "Sorting by average vote", Toast.LENGTH_SHORT).show();
+                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_VOTE_AVERAGE));
+                        break;
+                    case MovieNightConstants.KEY_SORT_NUM_VOTES:
+                        Toast.makeText(Results.this, "Sorting by number of votes", Toast.LENGTH_SHORT).show();
+                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_VOTE_COUNT));
                         break;
                 }
 

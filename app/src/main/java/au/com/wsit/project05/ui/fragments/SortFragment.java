@@ -47,32 +47,42 @@ public class SortFragment extends DialogFragment
                 {
                     case R.id.radioPopularity:
                         mSelection = MovieNightConstants.KEY_SORT_POPULARITY;
-
+                        mListener.getSelection(mSelection);
+                        closeFragment();
                         break;
                     case R.id.radioReleaseDate:
                         mSelection = MovieNightConstants.KEY_SORT_RELEASE_DATE;
-                        Toast.makeText(getActivity(), "Sorting by release date", Toast.LENGTH_SHORT).show();
+                        mListener.getSelection(mSelection);
+                        closeFragment();
                         break;
                     case R.id.radioRevenue:
                         mSelection = MovieNightConstants.KEY_SORT_REVENUE;
-                        Toast.makeText(getActivity(), "Sorting by revenue", Toast.LENGTH_SHORT).show();
+                        mListener.getSelection(mSelection);
+                        closeFragment();
                         break;
                     case R.id.radioAverageVote:
                         mSelection = MovieNightConstants.KEY_SORT_AVERAGE_VOTE;
-                        Toast.makeText(getActivity(), "Sorting by average vote", Toast.LENGTH_SHORT).show();
+                        mListener.getSelection(mSelection);
+                        closeFragment();
                         break;
                     case R.id.radioNumVotes:
                         mSelection = MovieNightConstants.KEY_SORT_NUM_VOTES;
-                        Toast.makeText(getActivity(), "Sorting by number of votes", Toast.LENGTH_SHORT).show();
+                        mListener.getSelection(mSelection);
+                        closeFragment();
                         break;
                 }
 
-                mListener.getSelection(mSelection);
-                closeFragment();
+
+
+
             }
         });
 
+
+
         return rootView;
+
+
     }
 
     private void closeFragment()

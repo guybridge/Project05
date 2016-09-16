@@ -1,5 +1,7 @@
 package au.com.wsit.project05.utils;
 
+import android.util.Log;
+
 /**
  * Class to build the TMDB URL for Movie Night
  */
@@ -39,6 +41,14 @@ public class UrlBuilder
         public String getmBuiltURL()
         {
             return mBuiltURL;
+        }
+
+        public static String replaceSortParameter(String url, String sortMethod)
+        {
+
+            String newURL = url.replace("vote_average.desc", sortMethod);
+            Log.i(TAG, "New Sorted URL is: " + newURL);
+            return newURL;
         }
 
 

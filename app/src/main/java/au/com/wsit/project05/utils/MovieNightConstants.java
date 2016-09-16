@@ -39,4 +39,11 @@ public class MovieNightConstants
     public static final String KEY_SORT_REVENUE = "revenue";
     public static final String KEY_SORT_AVERAGE_VOTE = "average_vote";
     public static final String KEY_SORT_NUM_VOTES = "number_of_votes";
+
+    // Sorting
+    public static final String SORT_POPULARITY = "popularity.desc";
+    public static final String SORT_RELEASE_DATE = "release_date.asc";
+    public static final String SORT_REVENUE = "revenue.desc";
+    public static final String SORT_VOTE_AVERAGE = "vote_average.desc";
+    public static final String SORT_VOTE_COUNT = "vote_count.desc";
 }
