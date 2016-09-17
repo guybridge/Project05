@@ -53,36 +53,5 @@ public class UrlBuilder
 
 
 
-
-
-
-    // Allow users to choose: rating threshold
-
-    // vote_average.gte=
-
-    // Allow users to choose: minimum # of ratings
-
-    // vote_count.gte=100
-
-    // Allow users to choose: release date range
-
-    // release_date.gte=
-    // release_date.lte=
-
-    // https://api.themoviedb.org/3/discover/movie?sort_by=vote_count.gte=10&api_key=4a0ef3c693045b63c407d7f5b520f647
-
-    // EXAMPLE
-    // https://api.themoviedb.org/3/discover/movie? // BASE URL
-    // &api_key=4a0ef3c693045b63c407d7f5b520f647    // API_KEY
-    // &sort_by=
-    // vote_average.desc&vote_average.gte=10
-    // &vote_count.gte=100
-    // &release_date.gte=2010
-    // &release_date.lte=2012
-
-    // EXAMPLE
-    // https://api.themoviedb.org/3/discover/movie?&api_key=4a0ef3c693045b63c407d7f5b520f647&sort_by=vote_average.desc&vote_average.gte=5&vote_count.gte=100&release_date.gte=2010&release_date.lte=2012
-
-
 }
 

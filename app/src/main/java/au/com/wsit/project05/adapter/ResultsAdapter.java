@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import au.com.wsit.project05.R;
 import au.com.wsit.project05.ui.fragments.MovieDetailsFragment;
 import au.com.wsit.project05.utils.MovieNightConstants;
@@ -23,10 +25,10 @@ import au.com.wsit.project05.utils.ResultsItems;
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder>
 {
     private Context mContext;
-    private ResultsItems[] mResults;
+    private ArrayList<ResultsItems> mResults;
 
 
-    public ResultsAdapter(Context context, ResultsItems[]results)
+    public ResultsAdapter(Context context, ArrayList<ResultsItems> results)
     {
         mContext = context;
         mResults = results;
@@ -43,7 +45,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     @Override
     public void onBindViewHolder(final ResultsViewHolder holder, final int position)
     {
-        holder.bindResults(mResults[position]);
+        holder.bindResults(mResults.get(position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
@@ -56,9 +58,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
 
                 // Create a bundle to store data
                 Bundle bundle = new Bundle();
-                bundle.putString(MovieNightConstants.POSTER_URL, mResults[position].getmPosterURL());
-                bundle.putString(MovieNightConstants.TITLE, mResults[position].getmMovieTitle());
-                bundle.putString(MovieNightConstants.OVERVIEW, mResults[position].getmOverview());
+                bundle.putString(MovieNightConstants.POSTER_URL, mResults.get(position).getmPosterURL());
+                bundle.putString(MovieNightConstants.TITLE, mResults.get(position).getmMovieTitle());
+                bundle.putString(MovieNightConstants.OVERVIEW, mResults.get(position).getmOverview());
 
                 movieDetails.setArguments(bundle);
 
@@ -71,7 +73,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     @Override
     public int getItemCount()
     {
-        return mResults.length;
+        return mResults.size();
     }
 
     public class ResultsViewHolder extends RecyclerView.ViewHolder
@@ -89,7 +91,16 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
         public void bindResults(ResultsItems item)
         {
             // Picasso set image
-            Picasso.with(mContext).load(item.getmPosterURL()).into(mPosterImage);
+
+            try
+            {
+                Picasso.with(mContext).load(item.getmPosterURL()).into(mPosterImage);
+            }
+            catch(NullPointerException e)
+            {
+
+            }
+
 
         }
     }

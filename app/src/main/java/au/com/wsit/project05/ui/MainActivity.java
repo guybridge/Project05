@@ -2,6 +2,7 @@ package au.com.wsit.project05.ui;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -160,10 +161,12 @@ public class MainActivity extends AppCompatActivity
                 maxDate = String.valueOf(mMaxDatePicker.getValue());
 
                 String URL = createURL(mRating, mVoteCount, minDate, maxDate);
+                String tvURL = createTVURL(mRating, mVoteCount, minDate, maxDate);
 
                 // Start the results intent
                 Intent intent = new Intent(MainActivity.this, Results.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra(MovieNightConstants.KEY_TV_RESULTS_URL, tvURL);
                 intent.putExtra(MovieNightConstants.KEY_RESULTS_URL, URL);
                 startActivity(intent);
 
@@ -215,6 +218,50 @@ public class MainActivity extends AppCompatActivity
         builtURL.setReleaseDateRange(minDate, maxDate);
 
         Log.i(TAG, "The Build URL is: " + builtURL.getmBuiltURL());
+
+        return builtURL.getmBuiltURL();
+    }
+
+    private String createTVURL(String minRating, String minVoteCount, String minDate, String maxDate)
+    {
+
+        String genresString = "";
+
+        // Create a new URL builder with the discover API endpoint as the base URL
+        UrlBuilder builtURL = new UrlBuilder(MovieNightConstants.TV_BASE_URL);
+
+        try
+        {
+            // Get the genre data
+            for(Map.Entry<String, String> entry : genreSelection.getSelected().entrySet())
+            {
+                String genreID = entry.getKey();
+                String genreName = entry.getValue();
+
+                Log.i(TAG, "Selected genre: " + genreName + " id: " + genreID);
+
+                genresString = genresString + entry.getKey() + "|";
+
+            }
+
+            // Set the genres selections
+            builtURL.setGenres(genresString.substring(1));
+        }
+        catch(NullPointerException e)
+        {
+            Log.i(TAG, "No genres selected");
+        }
+
+        // Set the minimum vote average
+        builtURL.setVoteAverageGTE(minRating);
+
+        // Set the vote count
+        builtURL.setVoteCountGTE(minVoteCount);
+
+        // Set the release date ranges
+        builtURL.setReleaseDateRange(minDate, maxDate);
+
+        Log.i(TAG, "The Build TV URL is: " + builtURL.getmBuiltURL());
 
         return builtURL.getmBuiltURL();
     }

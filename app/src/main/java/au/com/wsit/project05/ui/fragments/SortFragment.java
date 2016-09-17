@@ -73,8 +73,6 @@ public class SortFragment extends DialogFragment
                 }
 
 
-
-
             }
         });
 

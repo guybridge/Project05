@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,7 @@ public class GenreSelectionFragment extends DialogFragment
     private GenreAdapter mGenreAdapter;
     private RecyclerView mGenreReyclerView;
     private LinearLayoutManager mLayoutManager;
+    private ProgressBar mProgressBar;
 
     @Nullable
     @Override
@@ -41,6 +43,7 @@ public class GenreSelectionFragment extends DialogFragment
         mGenreReyclerView = (RecyclerView) rootView.findViewById(R.id.genreRecyclerView);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mGenreReyclerView.setLayoutManager(mLayoutManager);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.genresLoading);
 
 
         // Get a list of genres
@@ -75,6 +78,7 @@ public class GenreSelectionFragment extends DialogFragment
                         @Override
                         public void run()
                         {
+                            mProgressBar.setVisibility(View.GONE);
                             mGenreAdapter = new GenreAdapter(getActivity(), genreItems);
                             mGenreReyclerView.setAdapter(mGenreAdapter);
                         }

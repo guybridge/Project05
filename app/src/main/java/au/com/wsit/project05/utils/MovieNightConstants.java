@@ -13,6 +13,8 @@ public class MovieNightConstants
     // Docs: https://www.themoviedb.org/documentation/api/discover
     public static final String DISCOVER_BASE_URL = "https://api.themoviedb.org/3/discover/movie?api_key=4a0ef3c693045b63c407d7f5b520f647&sort_by=vote_average.desc";
 
+    public static final String TV_BASE_URL = "https://api.themoviedb.org/3/discover/tv?api_key=4a0ef3c693045b63c407d7f5b520f647";
+
     // EG: https://api.themoviedb.org/3/search/movie?query=the%20matrix&api_key=4a0ef3c693045b63c407d7f5b520f647
     public static final String SEARCH_ENDPOINT = "https://api.themoviedb.org/3/search/movie?";
 
@@ -22,7 +24,7 @@ public class MovieNightConstants
 
     public static final String GENRE_LIST =  "https://api.themoviedb.org/3/genre/movie/list?api_key=4a0ef3c693045b63c407d7f5b520f647";
 
-    // JSON Keys
+    // JSON Keys for movies
     public static final String RESULTS = "results";
     public static final String TITLE = "title";
     public static final String OVERVIEW = "overview";
@@ -30,6 +32,10 @@ public class MovieNightConstants
     public static final String BACKDROP_PATH = "backdrop_path";
     public static final String RELEASE_DATE = "release_date";
     public static final String MOVIE_ID = "id";
+
+    // JSON keys for TV
+    public static final String TV_TITLE = "name";
+
 
     public static final String POSTER_URL = "POSTER_URL";
     public static final String GENRES = "genres";
@@ -46,4 +52,5 @@ public class MovieNightConstants
     public static final String SORT_REVENUE = "revenue.desc";
     public static final String SORT_VOTE_AVERAGE = "vote_average.desc";
     public static final String SORT_VOTE_COUNT = "vote_count.desc";
+    public static final String KEY_TV_RESULTS_URL = "KEY_TV_RESULTS_URL";
 }
