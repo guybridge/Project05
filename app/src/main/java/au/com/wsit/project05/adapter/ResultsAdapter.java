@@ -61,9 +61,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
                 bundle.putString(MovieNightConstants.POSTER_URL, mResults.get(position).getmPosterURL());
                 bundle.putString(MovieNightConstants.TITLE, mResults.get(position).getmMovieTitle());
                 bundle.putString(MovieNightConstants.OVERVIEW, mResults.get(position).getmOverview());
-
                 movieDetails.setArguments(bundle);
-
                 movieDetails.show(fm, "Movie Details");
 
             }

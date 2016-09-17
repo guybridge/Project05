@@ -43,6 +43,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     public GenreViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_item_view, parent, false);
+
         return new GenreViewHolder(view);
     }
 
@@ -85,6 +86,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
                     {
                         //Toast.makeText(mContext, "Checked: Genre is: " + item.getGenreName() + "ID: " + item.getGenreID(), Toast.LENGTH_SHORT).show();
                         genresMap.put(item.getGenreID(), item.getGenreName());
+
                     }
                     else
                     {

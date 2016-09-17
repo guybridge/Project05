@@ -49,6 +49,7 @@ public class Results extends AppCompatActivity
     private TextView mErrorTextView;
     private String jsonURL;
     private String tvJsonURL;
+    private Boolean showTVResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,16 +63,17 @@ public class Results extends AppCompatActivity
         mResultsLoadingProgress.setVisibility(View.VISIBLE);
 
         mResultsRecyclerView = (RecyclerView) findViewById(R.id.resultsRecyclerView);
-        mGridLayout = new GridLayoutManager(this, 2);
+        mGridLayout = new GridLayoutManager(this, 3);
         mResultsRecyclerView.setLayoutManager(mGridLayout);
+
+
 
 
         // HttpUtils URL
         Intent intent = getIntent();
         jsonURL = intent.getStringExtra(MovieNightConstants.KEY_RESULTS_URL);
         tvJsonURL = intent.getStringExtra(MovieNightConstants.KEY_TV_RESULTS_URL);
-
-        Log.i(TAG, "TV JSON URL is: " + tvJsonURL);
+        showTVResults = intent.getBooleanExtra(MovieNightConstants.KEY_SHOW_TV_RESULTS, true);
 
         getResults(jsonURL, tvJsonURL);
 
@@ -175,28 +177,28 @@ public class Results extends AppCompatActivity
 
             }
 
-            if(loadTVresults())
+            if(showTVResults)
             {
+                // Now get the TV results
+                for (int i = 0; i < tvresultsArray.length(); i++)
+                {
+                    ResultsItems items = new ResultsItems();
+                    // Get the poster path
+                    String posterPath = tvresultsArray.getJSONObject(i).get(MovieNightConstants.POSTER_PATH).toString();
+                    String title = tvresultsArray.getJSONObject(i).get(MovieNightConstants.TV_TITLE).toString();
+                    String overview = tvresultsArray.getJSONObject(i).get(MovieNightConstants.OVERVIEW).toString();
+                    String movieID = tvresultsArray.getJSONObject(i).get(MovieNightConstants.MOVIE_ID).toString();
 
+                    items.setmPosterURL(MovieNightConstants.IMAGE_ENDPOINT + posterPath + "&api_key=" + MovieNightConstants.API_KEY);
+                    items.setmMovieTitle(title);
+                    items.setmOverview(overview);
+                    items.setmMovieID(movieID);
+
+                    //resultsItems[count] = items;
+                    resultsItemsArrayList.add(items);
+                }
             }
-            // Now get the TV results
-            for (int i = 0; i < tvresultsArray.length(); i++)
-            {
-                ResultsItems items = new ResultsItems();
-                // Get the poster path
-                String posterPath = tvresultsArray.getJSONObject(i).get(MovieNightConstants.POSTER_PATH).toString();
-                String title = tvresultsArray.getJSONObject(i).get(MovieNightConstants.TV_TITLE).toString();
-                String overview = tvresultsArray.getJSONObject(i).get(MovieNightConstants.OVERVIEW).toString();
-                String movieID = tvresultsArray.getJSONObject(i).get(MovieNightConstants.MOVIE_ID).toString();
 
-                items.setmPosterURL(MovieNightConstants.IMAGE_ENDPOINT + posterPath + "&api_key=" + MovieNightConstants.API_KEY);
-                items.setmMovieTitle(title);
-                items.setmOverview(overview);
-                items.setmMovieID(movieID);
-
-                //resultsItems[count] = items;
-                resultsItemsArrayList.add(items);
-            }
 
             return resultsItemsArrayList;
         }
@@ -240,30 +242,43 @@ public class Results extends AppCompatActivity
             public void getSelection(String selection)
             {
                 Log.i(TAG, "Got a callback: " + selection);
+
+                String sortedMovieURL;
+                String sortedTVURL;
                 // Get the selection and sort
                 switch (selection)
                 {
 
-//                    case MovieNightConstants.KEY_SORT_POPULARITY:
-//                        Toast.makeText(Results.this, "Sorting by popularity", Toast.LENGTH_SHORT).show();
-//                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_POPULARITY));
-//                        break;
-//                    case MovieNightConstants.KEY_SORT_RELEASE_DATE:
-//                        Toast.makeText(Results.this, "Sorting by release date", Toast.LENGTH_SHORT).show();
-//                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_RELEASE_DATE));
-//                        break;
-//                    case MovieNightConstants.KEY_SORT_REVENUE:
-//                        Toast.makeText(Results.this, "Sorting by revenue", Toast.LENGTH_SHORT).show();
-//                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_REVENUE));
-//                        break;
-//                    case MovieNightConstants.KEY_SORT_AVERAGE_VOTE:
-//                        Toast.makeText(Results.this, "Sorting by average vote", Toast.LENGTH_SHORT).show();
-//                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_VOTE_AVERAGE));
-//                        break;
-//                    case MovieNightConstants.KEY_SORT_NUM_VOTES:
-//                        Toast.makeText(Results.this, "Sorting by number of votes", Toast.LENGTH_SHORT).show();
-//                        getResults(UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_VOTE_COUNT));
-//                        break;
+                    case MovieNightConstants.KEY_SORT_POPULARITY:
+                        Toast.makeText(Results.this, "Sorting by popularity", Toast.LENGTH_SHORT).show();
+                        sortedMovieURL = UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_POPULARITY);
+                        sortedTVURL = UrlBuilder.replaceSortParameter(tvJsonURL, MovieNightConstants.SORT_POPULARITY);
+                        getResults(sortedMovieURL, sortedTVURL);
+                        break;
+                    case MovieNightConstants.KEY_SORT_RELEASE_DATE:
+                        Toast.makeText(Results.this, "Sorting by release date", Toast.LENGTH_SHORT).show();
+                        sortedMovieURL = UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_RELEASE_DATE);
+                        sortedTVURL = UrlBuilder.replaceSortParameter(tvJsonURL, MovieNightConstants.SORT_RELEASE_DATE);
+                        getResults(sortedMovieURL, sortedTVURL);
+                        break;
+                    case MovieNightConstants.KEY_SORT_REVENUE:
+                        Toast.makeText(Results.this, "Sorting by revenue", Toast.LENGTH_SHORT).show();
+                        sortedMovieURL = UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_REVENUE);
+                        sortedTVURL = UrlBuilder.replaceSortParameter(tvJsonURL, MovieNightConstants.SORT_REVENUE);
+                        getResults(sortedMovieURL, sortedTVURL);
+                        break;
+                    case MovieNightConstants.KEY_SORT_AVERAGE_VOTE:
+                        Toast.makeText(Results.this, "Sorting by average vote", Toast.LENGTH_SHORT).show();
+                        sortedMovieURL = UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.SORT_VOTE_AVERAGE);
+                        sortedTVURL = UrlBuilder.replaceSortParameter(tvJsonURL, MovieNightConstants.SORT_VOTE_AVERAGE);
+                        getResults(sortedMovieURL, sortedTVURL);
+                        break;
+                    case MovieNightConstants.KEY_SORT_NUM_VOTES:
+                        Toast.makeText(Results.this, "Sorting by number of votes", Toast.LENGTH_SHORT).show();
+                        sortedMovieURL = UrlBuilder.replaceSortParameter(jsonURL, MovieNightConstants.KEY_SORT_NUM_VOTES);
+                        sortedTVURL = UrlBuilder.replaceSortParameter(tvJsonURL, MovieNightConstants.KEY_SORT_NUM_VOTES);
+                        getResults(sortedMovieURL, sortedTVURL);
+                        break;
                 }
 
 

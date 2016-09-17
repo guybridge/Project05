@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:layout_height="match_parent" >
+
+
+<LinearLayout
+
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryDark"
     tools:context=".ui.MainActivity">
-
-    <Button
-        android:textColor="@color/textColour"
-        android:id="@+id/genreButton"
-        android:layout_margin="8dp"
-        android:background="@color/colorPrimary"
-        android:text="Genres"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -101,6 +98,14 @@
 
     </android.support.v7.widget.CardView>
 
+    <TextView
+        android:textColor="@color/textColour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Release Date Range"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"/>
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,6 +119,7 @@
             android:orientation="horizontal">
 
             <NumberPicker
+                android:descendantFocusability="blocksDescendants"
                 android:background="@color/colorPrimary"
                 android:layout_weight="1"
                 android:id="@+id/minDate"
@@ -123,6 +129,7 @@
             </NumberPicker>
 
             <NumberPicker
+                android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
@@ -138,15 +145,31 @@
 
     </android.support.v7.widget.CardView>
 
-    <Button
-        android:padding="15dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/textColour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search for movies"
-        android:id="@+id/searchButton"
-        android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <CheckBox
+            android:textColor="@color/textColour"
+            android:checked="true"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Include TV Results"
+            android:id="@+id/tvCheckBox"/>
+
+        <Button
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:textColor="@color/textColour"
+            android:id="@+id/genreButton"
+            android:background="@color/colorPrimary"
+            android:text="Genres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </LinearLayout>
+</ScrollView>

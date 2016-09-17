@@ -73,16 +73,25 @@ public class GenreSelectionFragment extends DialogFragment
 
                     }
 
-                    getActivity().runOnUiThread(new Runnable()
+                    try
                     {
-                        @Override
-                        public void run()
+                        getActivity().runOnUiThread(new Runnable()
                         {
-                            mProgressBar.setVisibility(View.GONE);
-                            mGenreAdapter = new GenreAdapter(getActivity(), genreItems);
-                            mGenreReyclerView.setAdapter(mGenreAdapter);
-                        }
-                    });
+                            @Override
+                            public void run()
+                            {
+                                mProgressBar.setVisibility(View.GONE);
+                                mGenreAdapter = new GenreAdapter(getActivity(), genreItems);
+                                mGenreReyclerView.setAdapter(mGenreAdapter);
+                            }
+                        });
+                    }
+                    catch(NullPointerException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
                 }
                 catch (JSONException e)
                 {

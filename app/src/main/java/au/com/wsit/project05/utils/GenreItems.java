@@ -7,6 +7,17 @@ public class GenreItems
 {
     public String genreName;
     public String genreID;
+    public boolean isChecked;
+
+    public boolean isChecked()
+    {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked)
+    {
+        isChecked = checked;
+    }
 
     public String getGenreName()
     {

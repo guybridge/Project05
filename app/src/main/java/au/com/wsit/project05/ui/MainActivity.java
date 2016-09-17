@@ -6,8 +6,11 @@ import android.graphics.Movie;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -32,8 +35,8 @@ public class MainActivity extends AppCompatActivity
     private NumberPicker mMinDatePicker;
     private NumberPicker mMaxDatePicker;
 
-    private Button mSearchButton;
     private Button mGenreButton;
+    private CheckBox mTVResultsCheckBox;
 
     private String mRating = String.valueOf(5);
     private String mVoteCount = String.valueOf(100);
@@ -55,9 +58,8 @@ public class MainActivity extends AppCompatActivity
 
         mVoteCountTextView = (TextView) findViewById(R.id.minVoteCountTextView);
         mVoteCountSeekBar = (SeekBar) findViewById(R.id.minVoteCountSeekBar);
-        mSearchButton = (Button) findViewById(R.id.searchButton);
         mGenreButton = (Button) findViewById(R.id.genreButton);
-
+        mTVResultsCheckBox = (CheckBox) findViewById(R.id.tvCheckBox);
         mMinDatePicker = (NumberPicker) findViewById(R.id.minDate);
         mMaxDatePicker = (NumberPicker) findViewById(R.id.maxDate);
 
@@ -146,36 +148,26 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+    }
 
+    // Starts the search
+    private void startSearch()
+    {
+        // HttpUtils the dates
+        minDate = String.valueOf(mMinDatePicker.getValue());
+        maxDate = String.valueOf(mMaxDatePicker.getValue());
 
+        String URL = createURL(mRating, mVoteCount, minDate, maxDate);
+        String tvURL = createTVURL(mRating, mVoteCount, minDate, maxDate);
+        Boolean showTVresults = mTVResultsCheckBox.isChecked();
 
-        // Setup the button click listener for searching
-        mSearchButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-                // HttpUtils the dates
-                minDate = String.valueOf(mMinDatePicker.getValue());
-                maxDate = String.valueOf(mMaxDatePicker.getValue());
-
-                String URL = createURL(mRating, mVoteCount, minDate, maxDate);
-                String tvURL = createTVURL(mRating, mVoteCount, minDate, maxDate);
-
-                // Start the results intent
-                Intent intent = new Intent(MainActivity.this, Results.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra(MovieNightConstants.KEY_TV_RESULTS_URL, tvURL);
-                intent.putExtra(MovieNightConstants.KEY_RESULTS_URL, URL);
-                startActivity(intent);
-
-            }
-        });
-
-
-
-
+        // Start the results intent
+        Intent intent = new Intent(MainActivity.this, Results.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra(MovieNightConstants.KEY_TV_RESULTS_URL, tvURL);
+        intent.putExtra(MovieNightConstants.KEY_RESULTS_URL, URL);
+        intent.putExtra(MovieNightConstants.KEY_SHOW_TV_RESULTS, showTVresults);
+        startActivity(intent);
     }
 
     private String createURL(String minRating, String minVoteCount, String minDate, String maxDate)
@@ -185,6 +177,8 @@ public class MainActivity extends AppCompatActivity
 
         // Create a new URL builder with the discover API endpoint as the base URL
         UrlBuilder builtURL = new UrlBuilder(MovieNightConstants.DISCOVER_BASE_URL);
+
+        int count = 0;
 
         try
            {
@@ -197,13 +191,21 @@ public class MainActivity extends AppCompatActivity
                    Log.i(TAG, "Selected genre: " + genreName + " id: " + genreID);
 
                    genresString = genresString + entry.getKey() + "|";
+                   count++;
 
                }
 
-               // Set the genres selections
-               builtURL.setGenres(genresString.substring(1));
+               if(count > 1)
+               {
+                   builtURL.setGenres(genresString.substring(1));
+               }
+               else
+               {
+                   builtURL.setGenres(genresString);
+               }
+
            }
-           catch(NullPointerException e)
+           catch(NullPointerException | StringIndexOutOfBoundsException e)
            {
                Log.i(TAG, "No genres selected");
            }
@@ -247,7 +249,7 @@ public class MainActivity extends AppCompatActivity
             // Set the genres selections
             builtURL.setGenres(genresString.substring(1));
         }
-        catch(NullPointerException e)
+        catch(NullPointerException | StringIndexOutOfBoundsException e)
         {
             Log.i(TAG, "No genres selected");
         }
@@ -264,5 +266,27 @@ public class MainActivity extends AppCompatActivity
         Log.i(TAG, "The Build TV URL is: " + builtURL.getmBuiltURL());
 
         return builtURL.getmBuiltURL();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        switch (id)
+        {
+            case R.id.action_search:
+                // Search
+                startSearch();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
