@@ -1,5 +1,6 @@
 package au.com.wsit.project05.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
